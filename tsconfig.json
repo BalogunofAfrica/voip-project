@@ -1,6 +1,28 @@
 {
   "extends": "expo/tsconfig.base",
   "compilerOptions": {
-    "strict": true
-  }
+    "allowJs": true,
+    "allowSyntheticDefaultImports": true,
+    "downlevelIteration": true,
+    "esModuleInterop": true,
+    "forceConsistentCasingInFileNames": true,
+    "isolatedModules": true,
+    "jsx": "react-jsx",
+    "module": "esnext",
+    "moduleResolution": "node",
+    "noEmit": true,
+    "resolveJsonModule": true,
+    "skipLibCheck": true,
+    "strict": true,
+    "target": "ES2021",
+    "noFallthroughCasesInSwitch": true,
+    "baseUrl": ".",
+    "paths": {
+      "@/*": ["./src/*"],
+      "@/components": ["./src/components/*"],
+      "@/views": ["./src/views/*"],
+      "@/utils": ["./src/utils/*"]
+    }
+  },
+  "include": ["src"]
 }
