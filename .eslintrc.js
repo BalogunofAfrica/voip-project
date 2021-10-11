@@ -42,19 +42,20 @@ module.exports = {
     ],
     "react/prop-types": "off",
     "react/react-in-jsx-scope": "off",
-    "react/destructuring-assignment": ["error", "never"],
-    "eol-last": ["error", "always"],
-    "no-void": "off",
     "react-hooks/rules-of-hooks": "error",
     "react-hooks/exhaustive-deps": "warn",
-    "no-unused-vars": "warn",
-    "import/no-default-export": "error",
+    "react/destructuring-assignment": ["error", "never"],
     "react/jsx-filename-extension": [
       "error",
       {
         extensions: [".ts", ".tsx"],
       },
     ],
+    "eol-last": ["error", "always"],
+    "import/prefer-default-export": "off",
+    "import/no-default-export": "error",
+    "no-void": "off",
+    "no-unused-vars": "warn",
   },
   overrides: [
     {
