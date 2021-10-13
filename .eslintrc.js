@@ -30,6 +30,8 @@ module.exports = {
     "prettier",
     "import",
     "unicorn",
+    "simple-import-sort",
+    "sort-keys-fix",
   ],
   rules: {
     "prettier/prettier": ["error"],
@@ -54,8 +56,10 @@ module.exports = {
     "eol-last": ["error", "always"],
     "import/prefer-default-export": "off",
     "import/no-default-export": "error",
-    "no-void": "off",
     "no-unused-vars": "warn",
+    "simple-import-sort/imports": "warn",
+    "simple-import-sort/exports": "warn",
+    "sort-keys-fix/sort-keys-fix": "warn",
   },
   overrides: [
     {

@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "1014885433978",
+    "project_id": "voip-3a1d4",
+    "storage_bucket": "voip-3a1d4.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1014885433978:android:b76058c34d8e892ec371c3",
+        "android_client_info": {
+          "package_name": "com.voiphack"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1014885433978-s54pp26d88km96230pp9f0mmi3dqf57b.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.voiphack",
+            "certificate_hash": "5e8f16062ea3cd2c4a0d547876baa6f38cabf625"
+          }
+        },
+        {
+          "client_id": "1014885433978-mmtsmrti5ldj3dpjh4kh72lve0gcfspn.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBQHHULAbMnZUaU2d0cWGdYx557t7yhOqs"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1014885433978-mmtsmrti5ldj3dpjh4kh72lve0gcfspn.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

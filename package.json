@@ -16,8 +16,11 @@
     "prebundle": "cd android && ./gradlew clean"
   },
   "dependencies": {
+    "@react-native-firebase/app": "^12.9.1",
+    "@react-native-firebase/firestore": "^12.9.1",
     "@react-navigation/native": "^6.0.5",
     "@react-navigation/stack": "^6.0.10",
+    "@types/react-native-webrtc": "^1.75.4",
     "expo": "~41.0.1",
     "expo-splash-screen": "~0.10.2",
     "expo-updates": "~0.5.4",
@@ -48,6 +51,8 @@
     "eslint-plugin-prettier": "^4.0.0",
     "eslint-plugin-react": "^7.26.1",
     "eslint-plugin-react-hooks": "^4.2.0",
+    "eslint-plugin-simple-import-sort": "^7.0.0",
+    "eslint-plugin-sort-keys-fix": "^1.1.2",
     "eslint-plugin-unicorn": "^36.0.0",
     "husky": "^7.0.2",
     "jest-expo": "~41.0.0",
