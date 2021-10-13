@@ -49,12 +49,6 @@ module.exports = {
     "react-hooks/rules-of-hooks": "error",
     "react-hooks/exhaustive-deps": "warn",
     "react/destructuring-assignment": ["error", "never"],
-    "react/jsx-filename-extension": [
-      "error",
-      {
-        extensions: [".ts", ".tsx"],
-      },
-    ],
     "eol-last": ["error", "always"],
     "import/prefer-default-export": "off",
     "import/no-default-export": "error",
@@ -62,7 +56,7 @@ module.exports = {
     "simple-import-sort/imports": "warn",
     "simple-import-sort/exports": "warn",
     "sort-keys-fix/sort-keys-fix": "warn",
-    "import/extensions": 1,
+    "import/extensions": "off",
   },
   overrides: [
     {
