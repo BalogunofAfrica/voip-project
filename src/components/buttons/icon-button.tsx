@@ -1,5 +1,4 @@
 import React, { FC } from "react";
-
 import {
   StyleSheet,
   TouchableOpacity,
@@ -23,7 +22,7 @@ const styles = StyleSheet.create({
 });
 
 const IconButton: FC<IconButtonProps> = (props) => {
-  // destructuring props for cleaner button component
+  // destructuring props for a cleaner button component
   // eslint-disable-next-line react/destructuring-assignment
   const { children, style, ...rest } = props;
 
