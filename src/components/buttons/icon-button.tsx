@@ -5,19 +5,19 @@ import {
   TouchableOpacityProps,
 } from "react-native";
 
+import { rf } from "@/utils/responsive-screen";
+
 export type IconButtonProps = TouchableOpacityProps;
 
 const styles = StyleSheet.create({
   button: {
     alignItems: "center",
-    backgroundColor: "red",
-    borderRadius: 25,
-    color: "white",
+    backgroundColor: "white",
+    borderRadius: rf(3),
     elevation: 10,
-    height: 50,
+    height: rf(6),
     justifyContent: "center",
-    padding: 5,
-    width: 50,
+    width: rf(6),
   },
 });
 
@@ -27,8 +27,12 @@ const IconButton: FC<IconButtonProps> = (props) => {
   const { children, style, ...rest } = props;
 
   return (
-    // eslint-disable-next-line react/jsx-props-no-spreading
-    <TouchableOpacity style={[styles.button, style]} {...rest}>
+    <TouchableOpacity
+      activeOpacity={0.75}
+      style={[styles.button, style]}
+      // eslint-disable-next-line react/jsx-props-no-spreading
+      {...rest}
+    >
       {children}
     </TouchableOpacity>
   );

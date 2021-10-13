@@ -71,7 +71,12 @@ module.exports = {
     },
     {
       files: "**/*.tsx",
-      rules: { "unicorn/no-null": "off", "prefer-destructuring": "off" },
+      rules: {
+        "unicorn/no-null": "off",
+        "prefer-destructuring": "off",
+        "unicorn/prefer-module": "off",
+        "global-require": "off",
+      },
     },
     {
       files: "**/*.{test,spec}.{ts,tsx}",
