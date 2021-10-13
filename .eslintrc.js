@@ -54,8 +54,9 @@ module.exports = {
     "eol-last": ["error", "always"],
     "import/prefer-default-export": "off",
     "import/no-default-export": "error",
-    "no-void": "off",
     "no-unused-vars": "warn",
+    "sort-keys": "warn",
+    "sort-imports": "warn",
   },
   overrides: [
     {
