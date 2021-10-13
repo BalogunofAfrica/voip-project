@@ -51,16 +51,17 @@ module.exports = {
     "react/destructuring-assignment": ["error", "never"],
     "eol-last": ["error", "always"],
     "import/prefer-default-export": "off",
+    "import/extensions": "off",
+    "no-unused-vars": "off",
     "import/no-default-export": "error",
-    "no-unused-vars": "warn",
+    "@typescript-eslint/no-unused-vars": "warn",
     "simple-import-sort/imports": "warn",
     "simple-import-sort/exports": "warn",
     "sort-keys-fix/sort-keys-fix": "warn",
-    "import/extensions": "off",
   },
   overrides: [
     {
-      files: ["*.ts", "*.tsx"],
+      files: ["**/*.ts", "**/*.tsx"],
       plugins: ["@typescript-eslint"],
       rules: {
         "unicorn/require-post-message-target-origin": "off",
