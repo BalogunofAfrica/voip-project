@@ -12,6 +12,9 @@ const IncomingCall = () => (
       style={[styles.background]}
     />
     <View style={styles.container}>
+      <View style={styles.callingTextContainer}>
+        <Text style={styles.callingText}>Incoming Call...</Text>
+      </View>
       <View style={styles.actionButtonsContainer}>
         <IconButton style={[styles.actionButton, styles.answerButton]}>
           <Text style={styles.buttonText}>A</Text>

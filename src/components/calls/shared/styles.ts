@@ -23,14 +23,21 @@ const styles = StyleSheet.create({
     color: "white",
     fontWeight: "bold",
   },
+  callingText: {
+    color: "black",
+    fontSize: rf(3),
+  },
+  callingTextContainer: {
+    paddingTop: rf(5),
+  },
   cancelButton: {
     backgroundColor: "red",
   },
   container: {
     alignItems: "center",
-    backgroundColor: "rgba(2, 2, 2, 0.25)",
+    backgroundColor: "rgba(2, 2, 2, 0.5)",
     flex: 1,
-    justifyContent: "flex-end",
+    justifyContent: "space-between",
     padding: rf(2),
   },
   wrapper: {
