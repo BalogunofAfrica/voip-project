@@ -1,0 +1,12 @@
+{
+  "name": "VoipHack",
+  "displayName": "Voip_Hack",
+  "expo": {
+    "name": "Voip_Hack",
+    "slug": "Voip_Hack",
+    "version": "1.0.0",
+    "assetBundlePatterns": [
+      "**/*"
+    ]
+  }
+}
