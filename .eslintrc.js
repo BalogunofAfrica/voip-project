@@ -13,6 +13,7 @@ module.exports = {
     "plugin:react/recommended",
     "plugin:unicorn/recommended",
     "airbnb",
+    "airbnb-typescript",
     "prettier",
   ],
   parser: "@typescript-eslint/parser",
@@ -22,6 +23,7 @@ module.exports = {
     },
     ecmaVersion: 12,
     sourceType: "module",
+    project: "./tsconfig.json",
   },
   plugins: [
     "@typescript-eslint",
@@ -60,6 +62,7 @@ module.exports = {
     "simple-import-sort/imports": "warn",
     "simple-import-sort/exports": "warn",
     "sort-keys-fix/sort-keys-fix": "warn",
+    "import/extensions": 1,
   },
   overrides: [
     {
