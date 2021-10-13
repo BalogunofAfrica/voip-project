@@ -1,23 +1,22 @@
 import React from "react";
-import { StyleSheet, Text, View } from "react-native";
+import { StyleSheet, View } from "react-native";
 
-import { IconButton } from "@/components/buttons";
+import { IncomingCall } from "@/components/calls";
 
 const styles = StyleSheet.create({
+  buttonText: {
+    color: "white",
+    fontWeight: "bold",
+  },
   container: {
-    alignItems: "center",
     backgroundColor: "#fff",
     flex: 1,
-    justifyContent: "center",
   },
 });
 
 const App = () => (
   <View style={styles.container}>
-    <Text>Open up App.tsx to start working on your app!</Text>
-    <IconButton>
-      <Text>Button</Text>
-    </IconButton>
+    <IncomingCall />
   </View>
 );
 
