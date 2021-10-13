@@ -25,6 +25,7 @@
     "react-native-screens": "^3.0.0",
     "react-native-unimodules": "~0.13.3",
     "react-native-web": "~0.13.12",
+    "react-native-webrtc": "^1.92.2",
     "zustand": "^3.5.13"
   },
   "devDependencies": {
