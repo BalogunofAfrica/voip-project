@@ -1,25 +1,8 @@
 import React from "react";
-import { Image, StyleSheet, Text, View } from "react-native";
+import { Image, Text, View } from "react-native";
 
 import { IconButton } from "@/components/buttons";
-
-const styles = StyleSheet.create({
-  background: {
-    ...StyleSheet.absoluteFillObject,
-    height: "100%",
-    width: "100%",
-  },
-  buttonText: {
-    color: "white",
-    fontWeight: "bold",
-  },
-  container: {
-    justifyContent: "flex-end",
-  },
-  wrapper: {
-    flex: 1,
-  },
-});
+import { styles } from "@/components/calls/shared/styles";
 
 const IncomingCall = () => (
   <View style={styles.wrapper}>
@@ -29,9 +12,14 @@ const IncomingCall = () => (
       style={[styles.background]}
     />
     <View style={styles.container}>
-      <IconButton>
-        <Text style={styles.buttonText}>A</Text>
-      </IconButton>
+      <View style={styles.actionButtonsContainer}>
+        <IconButton style={[styles.actionButton, styles.answerButton]}>
+          <Text style={styles.buttonText}>A</Text>
+        </IconButton>
+        <IconButton style={[styles.actionButton, styles.cancelButton]}>
+          <Text style={styles.buttonText}>D</Text>
+        </IconButton>
+      </View>
     </View>
   </View>
 );
