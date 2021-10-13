@@ -2,13 +2,18 @@
   "main": "index.js",
   "scripts": {
     "android": "react-native run-android",
+    "androidrelease": "react-native run-android --variant=release",
     "ios": "react-native run-ios",
     "web": "expo start --web",
     "start": "react-native start",
     "test": "jest",
     "lint": "eslint \"**/*.{ts,tsx}\"",
     "prepare": "husky install",
-    "precommit": "lint-staged"
+    "precommit": "lint-staged",
+    "assemble": "cd android && ./gradlew assembleRelease",
+    "bundle": "cd android && ./gradlew bundleRelease",
+    "preassemble": "cd android && ./gradlew clean",
+    "prebundle": "cd android && ./gradlew clean"
   },
   "dependencies": {
     "@react-navigation/native": "^6.0.5",
@@ -25,6 +30,7 @@
     "react-native-screens": "^3.0.0",
     "react-native-unimodules": "~0.13.3",
     "react-native-web": "~0.13.12",
+    "react-native-webrtc": "^1.92.2",
     "zustand": "^3.5.13"
   },
   "devDependencies": {
