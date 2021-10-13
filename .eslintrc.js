@@ -49,24 +49,19 @@ module.exports = {
     "react-hooks/rules-of-hooks": "error",
     "react-hooks/exhaustive-deps": "warn",
     "react/destructuring-assignment": ["error", "never"],
-    "react/jsx-filename-extension": [
-      "error",
-      {
-        extensions: [".ts", ".tsx"],
-      },
-    ],
     "eol-last": ["error", "always"],
     "import/prefer-default-export": "off",
+    "import/extensions": "off",
+    "no-unused-vars": "off",
     "import/no-default-export": "error",
-    "no-unused-vars": "warn",
+    "@typescript-eslint/no-unused-vars": "warn",
     "simple-import-sort/imports": "warn",
     "simple-import-sort/exports": "warn",
     "sort-keys-fix/sort-keys-fix": "warn",
-    "import/extensions": 1,
   },
   overrides: [
     {
-      files: ["*.ts", "*.tsx"],
+      files: ["**/*.ts", "**/*.tsx"],
       plugins: ["@typescript-eslint"],
       rules: {
         "unicorn/require-post-message-target-origin": "off",

@@ -1,7 +1,7 @@
 import React from "react";
 import { StyleSheet, Text, View } from "react-native";
 
-// import {} from "@/components/buttons";
+import { IconButton } from "@/components/buttons";
 
 const styles = StyleSheet.create({
   container: {
@@ -15,6 +15,9 @@ const styles = StyleSheet.create({
 const App = () => (
   <View style={styles.container}>
     <Text>Open up App.tsx to start working on your app!</Text>
+    <IconButton>
+      <Text>Button</Text>
+    </IconButton>
   </View>
 );
 
