@@ -9,7 +9,7 @@ import Animated, {
 } from "react-native-reanimated";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 
-import { CustomText } from "@/components/custom-text";
+import { CustomText } from "@/components/typography";
 
 const AnimatedGradient = Animated.createAnimatedComponent(LinearGradient);
 
