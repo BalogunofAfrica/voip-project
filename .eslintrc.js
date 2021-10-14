@@ -13,6 +13,7 @@ module.exports = {
     "plugin:react/recommended",
     "plugin:unicorn/recommended",
     "airbnb",
+    "airbnb-typescript",
     "prettier",
   ],
   parser: "@typescript-eslint/parser",
@@ -22,6 +23,7 @@ module.exports = {
     },
     ecmaVersion: 12,
     sourceType: "module",
+    project: "./tsconfig.json",
   },
   plugins: [
     "@typescript-eslint",
@@ -30,6 +32,8 @@ module.exports = {
     "prettier",
     "import",
     "unicorn",
+    "simple-import-sort",
+    "sort-keys-fix",
   ],
   rules: {
     "prettier/prettier": ["error"],
@@ -41,25 +45,24 @@ module.exports = {
       },
     ],
     "react/prop-types": "off",
+    "react/require-default-props": "off",
     "react/react-in-jsx-scope": "off",
     "react-hooks/rules-of-hooks": "error",
     "react-hooks/exhaustive-deps": "warn",
     "react/destructuring-assignment": ["error", "never"],
-    "react/jsx-filename-extension": [
-      "error",
-      {
-        extensions: [".ts", ".tsx"],
-      },
-    ],
     "eol-last": ["error", "always"],
     "import/prefer-default-export": "off",
+    "import/extensions": "off",
+    "no-unused-vars": "off",
     "import/no-default-export": "error",
-    "no-void": "off",
-    "no-unused-vars": "warn",
+    "@typescript-eslint/no-unused-vars": "warn",
+    "simple-import-sort/imports": "warn",
+    "simple-import-sort/exports": "warn",
+    "sort-keys-fix/sort-keys-fix": "warn",
   },
   overrides: [
     {
-      files: ["*.ts", "*.tsx"],
+      files: ["**/*.ts", "**/*.tsx"],
       plugins: ["@typescript-eslint"],
       rules: {
         "unicorn/require-post-message-target-origin": "off",
@@ -69,7 +72,12 @@ module.exports = {
     },
     {
       files: "**/*.tsx",
-      rules: { "unicorn/no-null": "off", "prefer-destructuring": "off" },
+      rules: {
+        "unicorn/no-null": "off",
+        "prefer-destructuring": "off",
+        "unicorn/prefer-module": "off",
+        "global-require": "off",
+      },
     },
     {
       files: "**/*.{test,spec}.{ts,tsx}",

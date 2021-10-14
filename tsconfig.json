@@ -1,28 +1,29 @@
 {
-  "extends": "expo/tsconfig.base",
   "compilerOptions": {
     "allowJs": true,
     "allowSyntheticDefaultImports": true,
+    "baseUrl": ".",
     "downlevelIteration": true,
     "esModuleInterop": true,
     "forceConsistentCasingInFileNames": true,
     "isolatedModules": true,
-    "jsx": "react-jsx",
+    "jsx": "react-native",
     "module": "esnext",
     "moduleResolution": "node",
     "noEmit": true,
+    "noFallthroughCasesInSwitch": true,
+    "paths": {
+      "@/*": ["./src/*"],
+      "@/assets": ["./src/assets/*"],
+      "@/components": ["./src/components/*"],
+      "@/utils": ["./src/utils/*"],
+      "@/views": ["./src/views/*"]
+    },
     "resolveJsonModule": true,
     "skipLibCheck": true,
     "strict": true,
-    "target": "ES2021",
-    "noFallthroughCasesInSwitch": true,
-    "baseUrl": ".",
-    "paths": {
-      "@/*": ["./src/*"],
-      "@/components": ["./src/components/*"],
-      "@/views": ["./src/views/*"],
-      "@/utils": ["./src/utils/*"]
-    }
+    "target": "ES2020"
   },
-  "include": ["src"]
+  "extends": "expo/tsconfig.base",
+  "include": ["src", "./src/**/*.ts", "./src/**/*.tsx"]
 }
