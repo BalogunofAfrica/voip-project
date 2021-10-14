@@ -56,9 +56,9 @@
 	<key>UIStatusBarStyle</key>
 	<string>UIStatusBarStyleDefault</string>
 	<key>NSCameraUsageDescription</key>
-  	<string>Camera permission description</string>
-  	<key>NSMicrophoneUsageDescription</key>
-  	<string>Microphone permission description</string>
+	<string>Camera permission description</string>
+	<key>NSMicrophoneUsageDescription</key>
+	<string>Microphone permission description</string>
 	<key>UIAppFonts</key>
 	<array>
 		<string>AntDesign.ttf</string>
@@ -77,6 +77,14 @@
 		<string>Octicons.ttf</string>
 		<string>SimpleLineIcons.ttf</string>
 		<string>Zocial.ttf</string>
+		<string>BentonSans-Black.otf</string>
+		<string>BentonSans-Bold.otf</string>
+		<string>BentonSans-Book.otf</string>
+		<string>BentonSans-ExtraLight.otf</string>
+		<string>BentonSans-Light.otf</string>
+		<string>BentonSans-Medium.otf</string>
+		<string>BentonSans-Regular.otf</string>
+		<string>BentonSans-Thin.otf</string>
 	</array>
 </dict>
 </plist>
