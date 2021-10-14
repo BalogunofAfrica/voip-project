@@ -18,6 +18,7 @@
   "dependencies": {
     "@react-native-firebase/app": "^12.9.1",
     "@react-native-firebase/firestore": "^12.9.1",
+    "@react-navigation/core": "^6.1.0",
     "@react-navigation/native": "^6.0.5",
     "@react-navigation/stack": "^6.0.10",
     "@types/react-native-webrtc": "^1.75.4",

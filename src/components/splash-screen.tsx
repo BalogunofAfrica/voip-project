@@ -27,13 +27,7 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: "center",
   },
-  container: {
-    bottom: 0,
-    left: 0,
-    position: "absolute",
-    right: 0,
-    top: 0,
-  },
+  container: StyleSheet.absoluteFillObject,
   contentChild: {
     alignItems: "center",
     flex: 1,
@@ -47,11 +41,7 @@ const styles = StyleSheet.create({
     backgroundColor: "rgba(0,0,0,0.04)",
     borderTopLeftRadius: 10,
     borderTopRightRadius: 10,
-    bottom: 0,
-    left: 0,
-    position: "absolute",
-    right: 0,
-    top: 0,
+    ...StyleSheet.absoluteFillObject,
     zIndex: 0,
   },
   gradient: {
