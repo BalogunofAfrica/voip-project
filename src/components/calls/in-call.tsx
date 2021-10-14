@@ -18,7 +18,10 @@ const renderLocalStream = (props: InCallProps) =>
       <RTCView
         objectFit="cover"
         streamURL={props.localStream.toURL()}
-        style={{ ...styles.localVideoSize, ...styles.elevated }}
+        style={{
+          ...(props.remoteStream ? styles.localVideoSize : styles.fullSize),
+          ...styles.elevated,
+        }}
       />
     </View>
   ) : null;
@@ -36,7 +39,7 @@ const renderRemoteStream = (props: InCallProps) =>
 
 const InCall: VFC<InCallProps> = (props) => (
   <View style={styles.wrapper}>
-    {renderRemoteStream}
+    {renderRemoteStream(props)}
     {renderLocalStream(props)}
     <View style={styles.container}>
       <View style={styles.actionButtonsContainer}>

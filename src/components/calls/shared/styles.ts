@@ -51,11 +51,11 @@ const styles = StyleSheet.create({
     width: "100%",
   },
   localVideoSize: {
-    height: rh(20),
+    height: rh(25),
     position: "absolute",
-    right: rf(20),
-    top: rf(20),
-    width: rw(30),
+    right: rf(5),
+    top: rf(5),
+    width: rw(25),
   },
   wrapper: {
     flex: 1,

@@ -1,13 +1,21 @@
 import firestore, {
   FirebaseFirestoreTypes,
 } from "@react-native-firebase/firestore";
-import React, { MutableRefObject, useRef, useState } from "react";
+import React, {
+  MutableRefObject,
+  useCallback,
+  useEffect,
+  useRef,
+  useState,
+} from "react";
 import { StyleSheet, View } from "react-native";
 import {
   EventOnAddStream,
   MediaStream,
   RTCIceCandidate,
+  RTCIceCandidateType,
   RTCPeerConnection,
+  RTCSessionDescription,
 } from "react-native-webrtc";
 
 import { InCall, IncomingCall, OutgoingCall } from "@/components/calls";
@@ -25,6 +33,7 @@ const configuration = { iceServers: [{ url: "stun:stun.l.google.com:19302" }] };
 const streamCleanUp = async (
   localStream: MediaStream | null,
   handleResetLocalStream: () => void,
+  handleResetRemoteStream: () => void,
 ) => {
   if (localStream) {
     // eslint-disable-next-line unicorn/no-array-for-each
@@ -33,6 +42,27 @@ const streamCleanUp = async (
   }
 
   handleResetLocalStream();
+  handleResetRemoteStream();
+};
+
+const fireStoreCleanUp = async (
+  documentRef: FirebaseFirestoreTypes.DocumentReference<FirebaseFirestoreTypes.DocumentData>,
+) => {
+  if (documentRef) {
+    const calleeCandidate = await documentRef.collection("callee").get();
+    // eslint-disable-next-line unicorn/no-array-for-each
+    calleeCandidate.forEach(async (candidate) => {
+      await candidate.ref.delete();
+    });
+
+    const callerCandidate = await documentRef.collection("caller").get();
+    // eslint-disable-next-line unicorn/no-array-for-each
+    callerCandidate.forEach(async (candidate) => {
+      await candidate.ref.delete();
+    });
+
+    documentRef.delete();
+  }
 };
 
 const collectICEcandidates = async (
@@ -44,6 +74,7 @@ const collectICEcandidates = async (
   const candidateCollection = documentRef.collection(localName);
 
   if (peerConnection.current) {
+    // On new ICE candidate, add it to firestore
     // eslint-disable-next-line no-param-reassign
     peerConnection.current.onicecandidate = (event) => {
       if (event.candidate) {
@@ -52,11 +83,14 @@ const collectICEcandidates = async (
     };
   }
 
+  // Get the ICE candidate added to firetore and update the local peer connection
   documentRef.collection(remoteName).onSnapshot((snapshot) => {
     // eslint-disable-next-line unicorn/no-array-for-each
     snapshot.docChanges().forEach((documentChange) => {
       if (documentChange.type === "added") {
-        const candidate = new RTCIceCandidate(documentChange.doc.data());
+        const candidate = new RTCIceCandidate(
+          documentChange.doc.data() as RTCIceCandidateType,
+        );
 
         peerConnection.current?.addIceCandidate(candidate);
       }
@@ -73,10 +107,12 @@ const useWebRtcCall = () => {
   const connecting = useRef(false);
 
   const handleResetLocalStream = () => setLocalStream(null);
+  const handleResetRemoteStream = () => setRemoteStream(null);
 
   const handleSetUpWebRtc = async () => {
     peerConnection.current = new RTCPeerConnection(configuration);
 
+    // Get the audio and video stream for the call
     const stream = await getMediaStream();
 
     if (stream) {
@@ -84,23 +120,27 @@ const useWebRtcCall = () => {
       peerConnection.current.addStream(stream);
     }
 
+    // Get remote stream once it is available
     peerConnection.current.onaddstream = (event: EventOnAddStream) => {
       setRemoteStream(event.stream);
     };
   };
 
   const handleCreate = async () => {
-    console.log("Connecting");
-
     connecting.current = true;
 
+    // Setup webRtc
     await handleSetUpWebRtc();
 
+    // Firestore document for the call
     const documentRef = firestore().collection("meet").doc("chatID");
 
+    // Exchange ICE candidates between caller and callee
     collectICEcandidates(peerConnection, documentRef, "caller", "callee");
 
     if (peerConnection.current) {
+      // Create the offer for the call
+      // Store the offer in the document
       const offer = await peerConnection.current.createOffer();
 
       peerConnection.current.setLocalDescription(offer);
@@ -117,19 +157,18 @@ const useWebRtcCall = () => {
   };
 
   const handleJoin = async () => {
-    console.log("Joining the call");
-
     connecting.current = true;
-
     setIncomingCall(false);
 
     const documentRef = firestore().collection("meet").doc("chatID");
-
     const offer = (await documentRef.get()).data()?.offer;
 
     if (offer) {
+      // Setup webRtc
       await handleSetUpWebRtc();
 
+      // Exchange ICE candidates between caller and callee
+      // The callee and caller are reversed for joining
       collectICEcandidates(peerConnection, documentRef, "callee", "caller");
 
       if (peerConnection.current) {
@@ -137,6 +176,8 @@ const useWebRtcCall = () => {
           new RTCSessionDescription(offer),
         );
 
+        // Create the answer for the call
+        // Update the document with answer
         const answer = await peerConnection.current.createAnswer();
 
         peerConnection.current.setLocalDescription(answer);
@@ -153,15 +194,66 @@ const useWebRtcCall = () => {
     }
   };
 
-  const handleHangup = async () => {
-    connecting.current = false;
+  const handleHangup = useCallback(async () => {
+    const documentRef = firestore().collection("meet").doc("chatID");
 
-    streamCleanUp(localStream, handleResetLocalStream);
+    connecting.current = false;
+    setIncomingCall(false);
+
+    // Close the connection
+    // Release the stream
+    streamCleanUp(localStream, handleResetLocalStream, handleResetRemoteStream);
+
+    // Delete the document for the call
+    fireStoreCleanUp(documentRef);
 
     if (peerConnection.current) {
       peerConnection.current.close();
     }
-  };
+  }, [localStream]);
+
+  useEffect(() => {
+    const documentRef = firestore().collection("meet").doc("chatID");
+
+    const subscribe = documentRef.onSnapshot((snapshot) => {
+      const data = snapshot.data();
+
+      // On answer start the call
+      if (
+        peerConnection.current &&
+        !peerConnection.current.remoteDescription &&
+        data &&
+        data.answer
+      ) {
+        peerConnection.current.setRemoteDescription(
+          new RTCSessionDescription(data.answer),
+        );
+      }
+
+      // if there is offer for the chatID, set the incomingCall flag
+      if (data && data.offer && !connecting.current) {
+        setIncomingCall(true);
+      }
+    });
+
+    // On delete of collection, call handleHangUp
+    // The other party has hung up
+    const subscribeDelete = documentRef
+      .collection("callee")
+      .onSnapshot((snapshot) => {
+        // eslint-disable-next-line unicorn/no-array-for-each
+        snapshot.docChanges().forEach((documentChange) => {
+          if (documentChange.type === "removed") {
+            handleHangup();
+          }
+        });
+      });
+
+    return () => {
+      subscribe();
+      subscribeDelete();
+    };
+  }, [handleHangup]);
 
   return {
     handleCreate,
