@@ -5,8 +5,6 @@ const getMediaStream = async () => {
 
   const sourceInfos = await mediaDevices.enumerateDevices();
 
-  console.log(sourceInfos);
-
   let videoSourceId;
   // eslint-disable-next-line unicorn/no-for-loop, no-plusplus
   for (let index = 0; index < sourceInfos.length; index++) {
