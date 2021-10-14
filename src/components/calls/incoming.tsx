@@ -1,8 +1,9 @@
 import React from "react";
-import { Image, Text, View } from "react-native";
+import { Image, View } from "react-native";
 
 import { IconButton } from "@/components/buttons";
 import { styles } from "@/components/calls/shared/styles";
+import { CustomText } from "@/components/typography";
 
 const IncomingCall = () => (
   <View style={styles.wrapper}>
@@ -13,14 +14,14 @@ const IncomingCall = () => (
     />
     <View style={styles.container}>
       <View style={styles.callingTextContainer}>
-        <Text style={styles.callingText}>Incoming Call...</Text>
+        <CustomText style={styles.callingText}>Incoming Call...</CustomText>
       </View>
       <View style={styles.actionButtonsContainer}>
         <IconButton style={[styles.actionButton, styles.answerButton]}>
-          <Text style={styles.buttonText}>A</Text>
+          <CustomText style={styles.buttonText}>A</CustomText>
         </IconButton>
         <IconButton style={[styles.actionButton, styles.cancelButton]}>
-          <Text style={styles.buttonText}>D</Text>
+          <CustomText style={styles.buttonText}>D</CustomText>
         </IconButton>
       </View>
     </View>
