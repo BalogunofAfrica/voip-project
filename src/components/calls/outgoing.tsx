@@ -1,19 +1,26 @@
-import React from "react";
+import React, { VFC } from "react";
 import { View } from "react-native";
 
 import { IconButton } from "@/components/buttons";
 import { styles } from "@/components/calls/shared/styles";
 import { CustomText } from "@/components/typography";
 
-const OutgoingCall = () => (
+type IncomingCallProps = {
+  onCreate: () => void;
+};
+
+const OutgoingCall: VFC<IncomingCallProps> = (props) => (
   <View style={styles.wrapper}>
     <View style={styles.container}>
       <View style={styles.callingTextContainer}>
-        <CustomText style={styles.callingText}>Calling...</CustomText>
+        <CustomText style={styles.callingText}>Create call</CustomText>
       </View>
       <View style={styles.actionButtonsContainer}>
-        <IconButton style={[styles.actionButton, styles.cancelButton]}>
-          <CustomText style={styles.buttonText}>E</CustomText>
+        <IconButton
+          onPress={props.onCreate}
+          style={[styles.actionButton, styles.createButton]}
+        >
+          <CustomText style={styles.buttonText}>C</CustomText>
         </IconButton>
       </View>
     </View>

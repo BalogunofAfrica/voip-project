@@ -1,11 +1,16 @@
-import React from "react";
+import React, { VFC } from "react";
 import { Image, View } from "react-native";
 
 import { IconButton } from "@/components/buttons";
 import { styles } from "@/components/calls/shared/styles";
 import { CustomText } from "@/components/typography";
 
-const IncomingCall = () => (
+type IncomingCallProps = {
+  onJoin: () => void;
+  onHangUp: () => void;
+};
+
+const IncomingCall: VFC<IncomingCallProps> = (props) => (
   <View style={styles.wrapper}>
     <Image
       resizeMode="cover"
@@ -17,10 +22,16 @@ const IncomingCall = () => (
         <CustomText style={styles.callingText}>Incoming Call...</CustomText>
       </View>
       <View style={styles.actionButtonsContainer}>
-        <IconButton style={[styles.actionButton, styles.answerButton]}>
+        <IconButton
+          onPress={props.onJoin}
+          style={[styles.actionButton, styles.answerButton]}
+        >
           <CustomText style={styles.buttonText}>A</CustomText>
         </IconButton>
-        <IconButton style={[styles.actionButton, styles.cancelButton]}>
+        <IconButton
+          onPress={props.onHangUp}
+          style={[styles.actionButton, styles.cancelButton]}
+        >
           <CustomText style={styles.buttonText}>D</CustomText>
         </IconButton>
       </View>

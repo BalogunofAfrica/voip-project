@@ -16,8 +16,8 @@ const styles = StyleSheet.create({
   },
   background: {
     ...StyleSheet.absoluteFillObject,
-    height: rh(100),
-    width: rw(100),
+    height: "100%",
+    width: "100%",
   },
   buttonText: {
     color: "white",
@@ -39,6 +39,26 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: "space-between",
     padding: rf(2),
+  },
+  createButton: {
+    backgroundColor: "blue",
+  },
+  elevated: {
+    elevation: 10,
+  },
+  flexEnd: {
+    justifyContent: "flex-end",
+  },
+  fullSize: {
+    height: "100%",
+    width: "100%",
+  },
+  localVideoSize: {
+    height: rh(25),
+    position: "absolute",
+    right: rf(3),
+    top: rf(3),
+    width: rw(25),
   },
   wrapper: {
     flex: 1,
