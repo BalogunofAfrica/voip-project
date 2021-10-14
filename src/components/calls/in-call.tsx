@@ -1,5 +1,5 @@
-import React from "react";
-import { StyleSheet, Text, View } from "react-native";
+import React, { FC } from "react";
+import { View } from "react-native";
 import { MediaStream } from "react-native-webrtc";
 
 type InCallProps = {
@@ -7,4 +7,6 @@ type InCallProps = {
   localStream: MediaStream | null;
 };
 
-const InCall = () => <View />;
+const InCall: FC<InCallProps> = () => <View />;
+
+export { InCall };

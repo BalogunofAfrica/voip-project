@@ -5,10 +5,10 @@ import {
 } from "@react-navigation/stack";
 import React from "react";
 
-import { SplashScreen } from "@/components/splash-screen";
-import type { Routes } from "@/navigation/route-types";
+import type { RoutesType } from "@/navigation/router/route-types";
+import { routes } from "@/navigation/router/routes";
 
-const Stack = createStackNavigator<Routes>();
+const Stack = createStackNavigator<RoutesType>();
 
 function Router() {
   return (
@@ -19,7 +19,7 @@ function Router() {
           headerShown: false,
         }}
       >
-        <Stack.Screen component={SplashScreen} name="Splash" />
+        <Stack.Screen component={routes.HomeRoute} name="HomeRoute" />
       </Stack.Navigator>
     </NavigationContainer>
   );
