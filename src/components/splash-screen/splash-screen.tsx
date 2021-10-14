@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { StyleSheet, View } from "react-native";
+import { View } from "react-native";
 import LinearGradient from "react-native-linear-gradient";
 import Animated from "react-native-reanimated";
 
@@ -9,49 +9,9 @@ import { useWebRtcCall } from "@/hooks/webrtc";
 import { sendMail } from "@/utils/util-functions";
 
 import { Content } from "./splash-content";
+import { screenStyles } from "./styles";
 
 const AnimatedGradient = Animated.createAnimatedComponent(LinearGradient);
-
-const styles = StyleSheet.create({
-  animatedText: {
-    alignSelf: "center",
-    color: "white",
-    fontSize: 25,
-    fontWeight: "bold",
-  },
-  animatedWrapper: {
-    alignItems: "center",
-    flex: 1,
-    justifyContent: "center",
-  },
-  container: StyleSheet.absoluteFillObject,
-  contentChild: {
-    alignItems: "center",
-    flex: 1,
-    paddingHorizontal: 16,
-    paddingTop: 84,
-  },
-  contentText: {
-    color: "#000",
-    fontSize: 14,
-  },
-  contentWrapper: {
-    backgroundColor: "rgba(0,0,0,0.04)",
-    borderTopLeftRadius: 10,
-    borderTopRightRadius: 10,
-    zIndex: 0,
-    ...StyleSheet.absoluteFillObject,
-  },
-  gradient: {
-    flex: 1,
-    zIndex: 1,
-  },
-  imageStyle: {
-    height: 114.29,
-    marginBottom: 20,
-    width: 100,
-  },
-});
 
 function SplashScreen() {
   const { animate, style1, style2, style3, style4 } = useSplashAnimation();
@@ -60,17 +20,17 @@ function SplashScreen() {
   const options = [
     {
       action: () => sendMail(mail),
-      icon: "mail",
+      icon: "envelope",
       title: mail,
     },
     {
       action: controller.handleCreate,
-      icon: "phone-call",
+      icon: "phone",
       title: "Call",
     },
     {
       action: controller.handleCreate,
-      icon: "video",
+      icon: "video-camera",
       title: "Video Call",
     },
   ];
@@ -81,30 +41,30 @@ function SplashScreen() {
 
   // Going to Move Up like Nav Bar...
   return (
-    <View style={styles.container}>
+    <View style={screenStyles.container}>
       <AnimatedGradient
         angle={45}
         angleCenter={{ x: 0.5, y: 0.5 }}
         colors={["#039BFE", "#072D92"]}
-        style={[styles.gradient, style1]}
+        style={[screenStyles.gradient, style1]}
         useAngle
       >
-        <Animated.View style={styles.animatedWrapper}>
+        <Animated.View style={screenStyles.animatedWrapper}>
           <Animated.Image
             source={require("@/assets/standard_bank_logo.png")}
-            style={[styles.imageStyle, style2]}
+            style={[screenStyles.imageStyle, style2]}
           />
 
           <Animated.View style={[style3]}>
-            <CustomText fontFamily="Black" style={styles.animatedText}>
-              Stanbic
+            <CustomText fontFamily="Black" style={screenStyles.animatedText}>
+              Stanbic IBTC
             </CustomText>
           </Animated.View>
         </Animated.View>
       </AnimatedGradient>
 
-      <Animated.View style={[styles.contentWrapper, style4]}>
-        <View style={styles.contentChild}>
+      <Animated.View style={[screenStyles.contentWrapper, style4]}>
+        <View style={screenStyles.contentChild}>
           <Content
             accountOfficerName="Account Officer"
             available="Available"

@@ -7,12 +7,13 @@ const styles = StyleSheet.create({
     marginHorizontal: rf(3),
   },
   actionButtonsContainer: {
-    flexDirection: "row",
+    // flexDirection: "row",
+    alignItems: "center",
     marginHorizontal: rf(-3),
     paddingBottom: rf(5),
   },
   answerButton: {
-    backgroundColor: "green",
+    backgroundColor: "rgba(255,255,255,0.3)",
   },
   background: {
     ...StyleSheet.absoluteFillObject,
