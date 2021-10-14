@@ -1,23 +1,20 @@
-import React, { useCallback, useEffect } from "react";
-import { Dimensions, StyleSheet, View } from "react-native";
+import React, { useEffect } from "react";
+import { StyleSheet, View } from "react-native";
 import LinearGradient from "react-native-linear-gradient";
-import Animated, {
-  Easing,
-  useAnimatedStyle,
-  useSharedValue,
-  withTiming as wt,
-} from "react-native-reanimated";
-import { useSafeAreaInsets } from "react-native-safe-area-context";
+import Animated from "react-native-reanimated";
 
 import { CustomText } from "@/components/typography";
+import { useSplashAnimation } from "@/hooks/animation/use-splash-animation";
+import { useWebRtcCall } from "@/hooks/webrtc";
+import { sendMail } from "@/utils/util-functions";
+
+import { Content } from "./splash-content";
 
 const AnimatedGradient = Animated.createAnimatedComponent(LinearGradient);
 
-const withTiming = (value: string | number) =>
-  wt(value, { duration: 1000, easing: Easing.elastic(0.7) });
-
 const styles = StyleSheet.create({
   animatedText: {
+    alignSelf: "center",
     color: "white",
     fontSize: 25,
     fontWeight: "bold",
@@ -31,7 +28,8 @@ const styles = StyleSheet.create({
   contentChild: {
     alignItems: "center",
     flex: 1,
-    justifyContent: "center",
+    paddingHorizontal: 16,
+    paddingTop: 84,
   },
   contentText: {
     color: "#000",
@@ -41,84 +39,45 @@ const styles = StyleSheet.create({
     backgroundColor: "rgba(0,0,0,0.04)",
     borderTopLeftRadius: 10,
     borderTopRightRadius: 10,
-    ...StyleSheet.absoluteFillObject,
     zIndex: 0,
+    ...StyleSheet.absoluteFillObject,
   },
   gradient: {
     flex: 1,
     zIndex: 1,
   },
   imageStyle: {
-    height: 100,
+    height: 114.29,
     marginBottom: 20,
     width: 100,
   },
 });
 
 function SplashScreen() {
-  const height = Dimensions.get("window").height;
-  const width = Dimensions.get("window").width;
+  const { animate, style1, style2, style3, style4 } = useSplashAnimation();
+  const controller = useWebRtcCall();
+  const mail = "Rm@stanbic.com";
+  const options = [
+    {
+      action: () => sendMail(mail),
+      icon: "mail",
+      title: mail,
+    },
+    {
+      action: controller.handleCreate,
+      icon: "phone-call",
+      title: "Call",
+    },
+    {
+      action: controller.handleCreate,
+      icon: "video",
+      title: "Video Call",
+    },
+  ];
 
-  // SafeArea Value...
-  const edges = useSafeAreaInsets();
-
-  // Animation Values....
-  const startAnimation = useSharedValue(0);
-
-  // Scaling Down Both logo and Title...
-  const scaleLogo = useSharedValue(1);
-  const scaleTitle = useSharedValue(1);
-
-  // Offset Animation....
-  const moveLogoX = useSharedValue(0);
-  const moveLogoY = useSharedValue(0);
-  const moveTitleX = useSharedValue(0);
-  const moveTitleY = useSharedValue(0);
-
-  // Animating COntent...
-  const contentTransition = useSharedValue(height);
-
-  // Animation function
-  const animate = useCallback(() => {
-    // Starting Animation after 500ms....
-    setTimeout(() => {
-      // Parallel Animation...
-      Animated.block([
-        (startAnimation.value = withTiming(-height + (edges.top + 65))),
-        (scaleLogo.value = withTiming(0.3)),
-        (scaleTitle.value = withTiming(0.8)),
-        (contentTransition.value = withTiming(0)),
-        (moveLogoX.value = withTiming(width / 2 - 35)),
-        (moveLogoY.value = withTiming(height / 2 - 5)),
-        (moveTitleX.value = withTiming(0)),
-        (moveTitleY.value = withTiming(height / 2 - 90)),
-      ]);
-    }, 500);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
   useEffect(() => {
     animate();
   }, [animate]);
-
-  const style1 = useAnimatedStyle(() => ({
-    transform: [{ translateY: startAnimation.value }],
-  }));
-
-  const style2 = useAnimatedStyle(() => ({
-    transform: [
-      { translateX: moveLogoX.value },
-      { translateY: moveLogoY.value },
-      { scale: scaleLogo.value },
-    ],
-  }));
-
-  const style3 = useAnimatedStyle(() => ({
-    transform: [{ translateY: moveTitleY.value }, { scale: scaleTitle.value }],
-  }));
-
-  const style4 = useAnimatedStyle(() => ({
-    transform: [{ translateY: contentTransition.value }],
-  }));
 
   // Going to Move Up like Nav Bar...
   return (
@@ -137,7 +96,7 @@ function SplashScreen() {
           />
 
           <Animated.View style={[style3]}>
-            <CustomText fontFamily="Book" style={styles.animatedText}>
+            <CustomText fontFamily="Black" style={styles.animatedText}>
               Stanbic
             </CustomText>
           </Animated.View>
@@ -146,9 +105,11 @@ function SplashScreen() {
 
       <Animated.View style={[styles.contentWrapper, style4]}>
         <View style={styles.contentChild}>
-          <CustomText fontFamily="Bold" style={styles.contentText}>
-            Stanbic
-          </CustomText>
+          <Content
+            accountOfficerName="Account Officer"
+            available="Available"
+            options={options}
+          />
         </View>
       </Animated.View>
     </View>
