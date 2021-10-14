@@ -59,6 +59,7 @@ module.exports = {
     "simple-import-sort/imports": "warn",
     "simple-import-sort/exports": "warn",
     "sort-keys-fix/sort-keys-fix": "warn",
+    "unicorn/no-null": "off",
   },
   overrides: [
     {
@@ -73,7 +74,6 @@ module.exports = {
     {
       files: "**/*.tsx",
       rules: {
-        "unicorn/no-null": "off",
         "prefer-destructuring": "off",
         "unicorn/prefer-module": "off",
         "global-require": "off",

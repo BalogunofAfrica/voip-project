@@ -14,6 +14,7 @@ module.exports = function (api) {
             "@/views": ["./src/views"],
             "@/components": "./src/components",
             "@/navigation": "./src/navigation",
+            "@/hooks": "./src/hooks",
           },
         },
       ],
