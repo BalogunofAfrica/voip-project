@@ -11,13 +11,28 @@ import { useSafeAreaInsets } from "react-native-safe-area-context";
 
 import { CustomText } from "@/components/typography";
 
+import { Content } from "./splash-content";
+
 const AnimatedGradient = Animated.createAnimatedComponent(LinearGradient);
 
 const withTiming = (value: string | number) =>
   wt(value, { duration: 1000, easing: Easing.elastic(0.7) });
 
+const options = [
+  {
+    action: () => {},
+    title: "rm@stanbic.com",
+  },
+  {
+    action: () => {},
+    title: "Video Call",
+  },
+  { action: () => {}, title: "Call" },
+];
+
 const styles = StyleSheet.create({
   animatedText: {
+    alignSelf: "center",
     color: "white",
     fontSize: 25,
     fontWeight: "bold",
@@ -31,7 +46,8 @@ const styles = StyleSheet.create({
   contentChild: {
     alignItems: "center",
     flex: 1,
-    justifyContent: "center",
+    paddingHorizontal: 16,
+    paddingTop: 84,
   },
   contentText: {
     color: "#000",
@@ -41,15 +57,15 @@ const styles = StyleSheet.create({
     backgroundColor: "rgba(0,0,0,0.04)",
     borderTopLeftRadius: 10,
     borderTopRightRadius: 10,
-    ...StyleSheet.absoluteFillObject,
     zIndex: 0,
+    ...StyleSheet.absoluteFillObject,
   },
   gradient: {
     flex: 1,
     zIndex: 1,
   },
   imageStyle: {
-    height: 100,
+    height: 114.29,
     marginBottom: 20,
     width: 100,
   },
@@ -72,7 +88,6 @@ function SplashScreen() {
   // Offset Animation....
   const moveLogoX = useSharedValue(0);
   const moveLogoY = useSharedValue(0);
-  const moveTitleX = useSharedValue(0);
   const moveTitleY = useSharedValue(0);
 
   // Animating COntent...
@@ -90,8 +105,7 @@ function SplashScreen() {
         (contentTransition.value = withTiming(0)),
         (moveLogoX.value = withTiming(width / 2 - 35)),
         (moveLogoY.value = withTiming(height / 2 - 5)),
-        (moveTitleX.value = withTiming(0)),
-        (moveTitleY.value = withTiming(height / 2 - 90)),
+        (moveTitleY.value = withTiming(height / 2 - 100)),
       ]);
     }, 500);
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -146,9 +160,7 @@ function SplashScreen() {
 
       <Animated.View style={[styles.contentWrapper, style4]}>
         <View style={styles.contentChild}>
-          <CustomText fontFamily="Bold" style={styles.contentText}>
-            Stanbic
-          </CustomText>
+          <Content options={options} />
         </View>
       </Animated.View>
     </View>

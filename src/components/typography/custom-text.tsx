@@ -23,7 +23,7 @@ interface Props extends TextProps {
 
 const styles = StyleSheet.create({
   defaultStyle: {
-    color: "#000",
+    color: "#0A2240",
     fontFamily: "BentonSans-Bold",
   },
 });
