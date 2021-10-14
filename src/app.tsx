@@ -1,7 +1,14 @@
 import React from "react";
+import { StatusBar } from "react-native";
+import { SafeAreaProvider } from "react-native-safe-area-context";
 
-import { Home } from "@/views/home";
+import { SplashScreen } from "@/components/splash-screen";
 
-const App = () => <Home />;
+const App = () => (
+  <SafeAreaProvider>
+    <StatusBar hidden />
+    <SplashScreen />
+  </SafeAreaProvider>
+);
 
 export { App };
