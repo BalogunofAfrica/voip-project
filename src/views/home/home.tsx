@@ -6,6 +6,7 @@ import { StyleSheet, View } from "react-native";
 import {
   EventOnAddStream,
   MediaStream,
+  RTCIceCandidate,
   RTCPeerConnection,
 } from "react-native-webrtc";
 
@@ -20,6 +21,19 @@ const styles = StyleSheet.create({
 });
 
 const configuration = { iceServers: [{ url: "stun:stun.l.google.com:19302" }] };
+
+const streamCleanUp = async (
+  localStream: MediaStream | null,
+  handleResetLocalStream: () => void,
+) => {
+  if (localStream) {
+    // eslint-disable-next-line unicorn/no-array-for-each
+    localStream.getTracks().forEach((track) => track.stop());
+    localStream.release();
+  }
+
+  handleResetLocalStream();
+};
 
 const collectICEcandidates = async (
   peerConnection: MutableRefObject<RTCPeerConnection | undefined>,
@@ -43,6 +57,8 @@ const collectICEcandidates = async (
     snapshot.docChanges().forEach((documentChange) => {
       if (documentChange.type === "added") {
         const candidate = new RTCIceCandidate(documentChange.doc.data());
+
+        peerConnection.current?.addIceCandidate(candidate);
       }
     });
   });
@@ -51,10 +67,12 @@ const collectICEcandidates = async (
 const useWebRtcCall = () => {
   const [localStream, setLocalStream] = useState<MediaStream | null>(null);
   const [remoteStream, setRemoteStream] = useState<MediaStream | null>(null);
-  const [incomingCall, setIncomingCalll] = useState(false);
+  const [incomingCall, setIncomingCall] = useState(false);
 
   const peerConnection = useRef<RTCPeerConnection>();
   const connecting = useRef(false);
+
+  const handleResetLocalStream = () => setLocalStream(null);
 
   const handleSetUpWebRtc = async () => {
     peerConnection.current = new RTCPeerConnection(configuration);
@@ -72,7 +90,7 @@ const useWebRtcCall = () => {
   };
 
   const handleCreate = async () => {
-    console.log("connecting");
+    console.log("Connecting");
 
     connecting.current = true;
 
@@ -81,10 +99,69 @@ const useWebRtcCall = () => {
     const documentRef = firestore().collection("meet").doc("chatID");
 
     collectICEcandidates(peerConnection, documentRef, "caller", "callee");
+
+    if (peerConnection.current) {
+      const offer = await peerConnection.current.createOffer();
+
+      peerConnection.current.setLocalDescription(offer);
+
+      const connectionWithOffer = {
+        offer: {
+          sdp: offer.sdp,
+          type: offer.type,
+        },
+      };
+
+      documentRef.set(connectionWithOffer);
+    }
   };
 
-  const handleJoin = async () => {};
-  const handleHangup = async () => {};
+  const handleJoin = async () => {
+    console.log("Joining the call");
+
+    connecting.current = true;
+
+    setIncomingCall(false);
+
+    const documentRef = firestore().collection("meet").doc("chatID");
+
+    const offer = (await documentRef.get()).data()?.offer;
+
+    if (offer) {
+      await handleSetUpWebRtc();
+
+      collectICEcandidates(peerConnection, documentRef, "callee", "caller");
+
+      if (peerConnection.current) {
+        peerConnection.current.setRemoteDescription(
+          new RTCSessionDescription(offer),
+        );
+
+        const answer = await peerConnection.current.createAnswer();
+
+        peerConnection.current.setLocalDescription(answer);
+
+        const connectionWithAnswer = {
+          answer: {
+            sdp: answer.sdp,
+            type: answer.type,
+          },
+        };
+
+        documentRef.update(connectionWithAnswer);
+      }
+    }
+  };
+
+  const handleHangup = async () => {
+    connecting.current = false;
+
+    streamCleanUp(localStream, handleResetLocalStream);
+
+    if (peerConnection.current) {
+      peerConnection.current.close();
+    }
+  };
 
   return {
     handleCreate,
