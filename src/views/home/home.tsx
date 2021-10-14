@@ -1,25 +1,20 @@
-import firestore, {
-  FirebaseFirestoreTypes,
-} from "@react-native-firebase/firestore";
-import React, {
-  MutableRefObject,
-  useCallback,
-  useEffect,
-  useRef,
-  useState,
-} from "react";
+import firestore from "@react-native-firebase/firestore";
+import React, { useCallback, useEffect, useRef, useState } from "react";
 import { StyleSheet, View } from "react-native";
 import {
   EventOnAddStream,
   MediaStream,
-  RTCIceCandidate,
-  RTCIceCandidateType,
   RTCPeerConnection,
   RTCSessionDescription,
 } from "react-native-webrtc";
 
 import { InCall, IncomingCall, OutgoingCall } from "@/components/calls";
-import { getMediaStream } from "@/utils/get-media-stream";
+import {
+  collectICEcandidates,
+  fireStoreCleanUp,
+  getMediaStream,
+  streamCleanUp,
+} from "@/utils/webrtc";
 
 const styles = StyleSheet.create({
   container: {
@@ -29,74 +24,6 @@ const styles = StyleSheet.create({
 });
 
 const configuration = { iceServers: [{ url: "stun:stun.l.google.com:19302" }] };
-
-const streamCleanUp = async (
-  localStream: MediaStream | null,
-  handleResetLocalStream: () => void,
-  handleResetRemoteStream: () => void,
-) => {
-  if (localStream) {
-    // eslint-disable-next-line unicorn/no-array-for-each
-    localStream.getTracks().forEach((track) => track.stop());
-    localStream.release();
-  }
-
-  handleResetLocalStream();
-  handleResetRemoteStream();
-};
-
-const fireStoreCleanUp = async (
-  documentRef: FirebaseFirestoreTypes.DocumentReference<FirebaseFirestoreTypes.DocumentData>,
-) => {
-  if (documentRef) {
-    const calleeCandidate = await documentRef.collection("callee").get();
-    // eslint-disable-next-line unicorn/no-array-for-each
-    calleeCandidate.forEach(async (candidate) => {
-      await candidate.ref.delete();
-    });
-
-    const callerCandidate = await documentRef.collection("caller").get();
-    // eslint-disable-next-line unicorn/no-array-for-each
-    callerCandidate.forEach(async (candidate) => {
-      await candidate.ref.delete();
-    });
-
-    documentRef.delete();
-  }
-};
-
-const collectICEcandidates = async (
-  peerConnection: MutableRefObject<RTCPeerConnection | undefined>,
-  documentRef: FirebaseFirestoreTypes.DocumentReference<FirebaseFirestoreTypes.DocumentData>,
-  localName: string,
-  remoteName: string,
-) => {
-  const candidateCollection = documentRef.collection(localName);
-
-  if (peerConnection.current) {
-    // On new ICE candidate, add it to firestore
-    // eslint-disable-next-line no-param-reassign
-    peerConnection.current.onicecandidate = (event) => {
-      if (event.candidate) {
-        candidateCollection.add(event.candidate);
-      }
-    };
-  }
-
-  // Get the ICE candidate added to firetore and update the local peer connection
-  documentRef.collection(remoteName).onSnapshot((snapshot) => {
-    // eslint-disable-next-line unicorn/no-array-for-each
-    snapshot.docChanges().forEach((documentChange) => {
-      if (documentChange.type === "added") {
-        const candidate = new RTCIceCandidate(
-          documentChange.doc.data() as RTCIceCandidateType,
-        );
-
-        peerConnection.current?.addIceCandidate(candidate);
-      }
-    });
-  });
-};
 
 const useWebRtcCall = () => {
   const [localStream, setLocalStream] = useState<MediaStream | null>(null);

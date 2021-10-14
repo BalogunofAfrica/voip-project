@@ -46,6 +46,9 @@ const styles = StyleSheet.create({
   elevated: {
     elevation: 10,
   },
+  flexEnd: {
+    justifyContent: "flex-end",
+  },
   fullSize: {
     height: "100%",
     width: "100%",
@@ -53,8 +56,8 @@ const styles = StyleSheet.create({
   localVideoSize: {
     height: rh(25),
     position: "absolute",
-    right: rf(5),
-    top: rf(5),
+    right: rf(3),
+    top: rf(3),
     width: rw(25),
   },
   wrapper: {

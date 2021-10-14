@@ -41,7 +41,7 @@ const InCall: VFC<InCallProps> = (props) => (
   <View style={styles.wrapper}>
     {renderRemoteStream(props)}
     {renderLocalStream(props)}
-    <View style={styles.container}>
+    <View style={[styles.container, styles.flexEnd]}>
       <View style={styles.actionButtonsContainer}>
         <IconButton
           onPress={props.onHangUp}
