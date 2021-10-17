@@ -36,7 +36,12 @@ module.exports = {
     "sort-keys-fix",
   ],
   rules: {
-    "prettier/prettier": ["error"],
+    "prettier/prettier": [
+      "error",
+      {
+        endOfLine: "auto",
+      },
+    ],
     "react/jsx-sort-props": ["error", { ignoreCase: true }],
     "unicorn/prevent-abbreviations": [
       "error",

@@ -1,36 +1,9 @@
 import React from "react";
-import { Image, StyleSheet, View } from "react-native";
+import { Image, View } from "react-native";
 
 import { CustomText } from "../typography";
 import { Block } from "./action-block";
-
-const styles = StyleSheet.create({
-  detailWrapper: {
-    alignItems: "center",
-    flexDirection: "row",
-    width: "100%",
-  },
-  image: {
-    borderRadius: 36,
-    height: 70,
-    marginRight: 24,
-    resizeMode: "cover",
-    width: 70,
-  },
-  separator: {
-    borderTopColor: "#777",
-    borderTopWidth: 1,
-    marginVertical: 20,
-    width: "100%",
-  },
-  text1: {
-    fontSize: 16,
-    marginBottom: 4,
-  },
-  text2: {
-    color: "#777",
-  },
-});
+import { contentStyles } from "./styles";
 
 type ContentType = {
   action(): void;
@@ -47,18 +20,21 @@ export const Content = (props: Props) => {
   const { accountOfficerName, available, options } = props;
   return (
     <>
-      <View style={styles.detailWrapper}>
-        <Image source={require("@/assets/img/user.png")} style={styles.image} />
+      <View style={contentStyles.detailWrapper}>
+        <Image
+          source={require("@/assets/img/user.png")}
+          style={contentStyles.image}
+        />
         <View>
-          <CustomText fontFamily="Black" style={styles.text1}>
+          <CustomText fontFamily="Black" style={contentStyles.text1}>
             {accountOfficerName}
           </CustomText>
-          <CustomText fontFamily="Medium" style={styles.text2}>
+          <CustomText fontFamily="Medium" style={contentStyles.text2}>
             {available}
           </CustomText>
         </View>
       </View>
-      <View style={styles.separator} />
+      <View style={contentStyles.separator} />
       {options.map(({ action, icon, title }) => (
         <Block
           action={action}

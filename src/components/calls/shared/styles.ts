@@ -3,16 +3,18 @@ import { StyleSheet } from "react-native";
 import { rf, rh, rw } from "@/utils/responsive-screen";
 
 const styles = StyleSheet.create({
+  acceptText: {
+    color: "#fff",
+    fontStyle: "italic",
+    marginBottom: 12,
+  },
   actionButton: {
     marginHorizontal: rf(3),
   },
   actionButtonsContainer: {
-    flexDirection: "row",
+    alignItems: "center",
     marginHorizontal: rf(-3),
     paddingBottom: rf(5),
-  },
-  answerButton: {
-    backgroundColor: "green",
   },
   background: {
     ...StyleSheet.absoluteFillObject,
@@ -43,6 +45,11 @@ const styles = StyleSheet.create({
   createButton: {
     backgroundColor: "blue",
   },
+  declineText: {
+    color: "#fff",
+    fontStyle: "italic",
+    marginTop: 12,
+  },
   elevated: {
     elevation: 10,
   },
@@ -53,12 +60,19 @@ const styles = StyleSheet.create({
     height: "100%",
     width: "100%",
   },
+  iconContainer: {
+    borderRadius: 30,
+    padding: 20,
+  },
   localVideoSize: {
     height: rh(25),
     position: "absolute",
     right: rf(3),
     top: rf(3),
     width: rw(25),
+  },
+  repeatContainer: {
+    alignItems: "center",
   },
   wrapper: {
     flex: 1,
