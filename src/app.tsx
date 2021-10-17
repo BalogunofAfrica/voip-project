@@ -2,12 +2,12 @@ import React from "react";
 import { StatusBar } from "react-native";
 import { SafeAreaProvider } from "react-native-safe-area-context";
 
-import { IncomingCall } from "@/components/calls";
+import { Router } from "./navigation/router";
 
 const App = () => (
   <SafeAreaProvider>
     <StatusBar hidden />
-    <IncomingCall onHangUp={() => {}} onJoin={() => {}} />
+    <Router />
   </SafeAreaProvider>
 );
 
