@@ -1,7 +1,2 @@
-import { Linking } from "react-native";
-
-const sendMail = (mail: string) => {
-  Linking.openURL(`mailto:${mail}`);
-};
-
-export { sendMail };
+export { playSound } from "./play-sound";
+export { sendMail } from "./send-mail";
