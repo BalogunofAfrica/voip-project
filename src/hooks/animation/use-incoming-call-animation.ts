@@ -116,7 +116,7 @@ const useIncomingCallAnimation = (accept: Accept, decline: Decline) => {
     PanGestureHandlerGestureEvent,
     Context
   >({
-    onActive: ({ translationY, y }, context) => {
+    onActive: ({ translationY }, context) => {
       textOpacity.value = withTiming(0);
       swipe.value = interpolate(
         translationY + context.translateY,
