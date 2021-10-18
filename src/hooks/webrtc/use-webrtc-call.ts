@@ -17,8 +17,12 @@ import {
 const configuration = {
   iceServers: [
     {
-      iceCandidatePoolSize: 10,
-      urls: ["stun:stun1.l.google.com:19302", "stun:stun2.l.google.com:19302"],
+      url: "stun:stun3.l.google.com:19302",
+    },
+    {
+      credential: "muazkh",
+      url: "turn:numb.viagenie.ca",
+      username: "webrtc@live.com",
     },
   ],
 };
