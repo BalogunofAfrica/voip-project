@@ -14,13 +14,14 @@ type InCallProps = {
 
 const renderLocalStream = (props: InCallProps) =>
   props.localStream ? (
-    <View style={styles.background}>
+    <View style={[styles.background, { zIndex: 2 }]}>
       <RTCView
         objectFit="cover"
         streamURL={props.localStream.toURL()}
         style={{
           ...(props.remoteStream ? styles.localVideoSize : styles.fullSize),
           ...styles.elevated,
+          zIndex: 3,
         }}
       />
     </View>
