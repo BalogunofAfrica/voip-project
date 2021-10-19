@@ -36,6 +36,7 @@ const useWebRtcCall = () => {
 
   const peerConnection = useRef<RTCPeerConnection>();
   const connecting = useRef(false);
+  const isVideo = useRef(false);
 
   const handleResetLocalStream = () => setLocalStream(null);
   const handleResetRemoteStream = () => setRemoteStream(null);
@@ -103,9 +104,13 @@ const useWebRtcCall = () => {
       .doc(FirebaseDocumentEnum.ChatID);
     const offer = (await documentRef.get()).data()?.offer;
 
+    isVideo.current = offer.sdp.includes("BUNDLE audio video");
+
     if (offer) {
       // Setup webRtc
-      await handleSetUpWebRtc(MediaType.Video);
+      await handleSetUpWebRtc(
+        isVideo.current ? MediaType.Video : MediaType.Audio,
+      );
 
       // Exchange ICE candidates between caller and callee
       // The callee and caller are reversed for joining
@@ -210,6 +215,7 @@ const useWebRtcCall = () => {
     handleHangup,
     handleJoin,
     incomingCall,
+    isVideo,
     localStream,
     remoteStream,
   };
