@@ -36,7 +36,12 @@ module.exports = {
     "sort-keys-fix",
   ],
   rules: {
-    "prettier/prettier": ["error"],
+    "prettier/prettier": [
+      "error",
+      {
+        endOfLine: "auto",
+      },
+    ],
     "react/jsx-sort-props": ["error", { ignoreCase: true }],
     "unicorn/prevent-abbreviations": [
       "error",
@@ -45,28 +50,25 @@ module.exports = {
       },
     ],
     "react/prop-types": "off",
+    "react/require-default-props": "off",
     "react/react-in-jsx-scope": "off",
     "react-hooks/rules-of-hooks": "error",
     "react-hooks/exhaustive-deps": "warn",
     "react/destructuring-assignment": ["error", "never"],
-    "react/jsx-filename-extension": [
-      "error",
-      {
-        extensions: [".ts", ".tsx"],
-      },
-    ],
     "eol-last": ["error", "always"],
     "import/prefer-default-export": "off",
+    "import/extensions": "off",
+    "no-unused-vars": "off",
     "import/no-default-export": "error",
-    "no-unused-vars": "warn",
+    "@typescript-eslint/no-unused-vars": "warn",
     "simple-import-sort/imports": "warn",
     "simple-import-sort/exports": "warn",
     "sort-keys-fix/sort-keys-fix": "warn",
-    "import/extensions": 1,
+    "unicorn/no-null": "off",
   },
   overrides: [
     {
-      files: ["*.ts", "*.tsx"],
+      files: ["**/*.ts", "**/*.tsx"],
       plugins: ["@typescript-eslint"],
       rules: {
         "unicorn/require-post-message-target-origin": "off",
@@ -76,7 +78,11 @@ module.exports = {
     },
     {
       files: "**/*.tsx",
-      rules: { "unicorn/no-null": "off", "prefer-destructuring": "off" },
+      rules: {
+        "prefer-destructuring": "off",
+        "unicorn/prefer-module": "off",
+        "global-require": "off",
+      },
     },
     {
       files: "**/*.{test,spec}.{ts,tsx}",
