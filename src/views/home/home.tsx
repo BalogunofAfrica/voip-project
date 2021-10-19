@@ -1,7 +1,9 @@
-import React from "react";
+import React, { useState } from "react";
 import { StyleSheet, View } from "react-native";
 
-import { InCall, IncomingCall, OutgoingCall } from "@/components/calls";
+import { InCall, IncomingCall } from "@/components/calls";
+import { FeedBack } from "@/components/feeback";
+import { SplashScreen } from "@/components/splash-screen";
 import { useWebRtcCall } from "@/hooks/webrtc";
 
 const styles = StyleSheet.create({
@@ -13,6 +15,14 @@ const styles = StyleSheet.create({
 
 const Home = () => {
   const controller = useWebRtcCall();
+  const [feedbackVisible, setFeedbackVisible] = useState<boolean>(false);
+  const toggleFeedbackModal = () => {
+    setFeedbackVisible(!feedbackVisible);
+  };
+  const handleHangup = async () => {
+    await controller.handleHangup();
+    toggleFeedbackModal();
+  };
 
   if (controller.incomingCall) {
     return (
@@ -27,7 +37,7 @@ const Home = () => {
     return (
       <InCall
         localStream={controller.localStream}
-        onHangUp={controller.handleHangup}
+        onHangUp={handleHangup}
         remoteStream={controller.remoteStream}
       />
     );
@@ -35,7 +45,8 @@ const Home = () => {
 
   return (
     <View style={styles.container}>
-      <OutgoingCall onCreate={controller.handleCreate} />
+      <SplashScreen createCall={controller.handleCreate} />
+      <FeedBack hide={toggleFeedbackModal} visible={feedbackVisible} />
     </View>
   );
 };

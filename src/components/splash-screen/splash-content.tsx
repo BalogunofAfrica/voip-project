@@ -22,10 +22,22 @@ export const Content = (props: Props) => {
     <>
       <View style={contentStyles.detailWrapper}>
         <Image
-          source={require("@/assets/img/user.png")}
+          source={require("@/assets/img/user_2.jpg")}
           style={contentStyles.image}
         />
         <View>
+          <CustomText
+            fontFamily="Medium"
+            style={[
+              contentStyles.text2,
+              {
+                fontSize: 10,
+                marginBottom: 8,
+              },
+            ]}
+          >
+            Account Officer
+          </CustomText>
           <CustomText fontFamily="Black" style={contentStyles.text1}>
             {accountOfficerName}
           </CustomText>
