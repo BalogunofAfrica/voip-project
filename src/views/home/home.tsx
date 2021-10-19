@@ -24,7 +24,7 @@ const Home = () => {
     toggleFeedbackModal();
   };
 
-  if (controller.incomingCall) {
+  if (controller.incomingCall && controller.connecting) {
     return (
       <IncomingCall
         onHangUp={controller.handleHangup}
@@ -33,7 +33,7 @@ const Home = () => {
     );
   }
 
-  if (controller.localStream) {
+  if (controller.localStream && controller.connecting) {
     return (
       <InCall
         localStream={controller.localStream}
