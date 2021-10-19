@@ -192,8 +192,19 @@ const useWebRtcCall = () => {
 
     // On delete of collection, call handleHangUp
     // The other party has hung up
-    const subscribeDelete = documentRef
+    const subscribeDeleteCallee = documentRef
       .collection(FirebaseDocumentEnum.Callee)
+      .onSnapshot((snapshot) => {
+        // eslint-disable-next-line unicorn/no-array-for-each
+        snapshot.docChanges().forEach((documentChange) => {
+          if (documentChange.type === "removed") {
+            handleHangup();
+          }
+        });
+      });
+
+    const subscribeDeleteCaller = documentRef
+      .collection(FirebaseDocumentEnum.Caller)
       .onSnapshot((snapshot) => {
         // eslint-disable-next-line unicorn/no-array-for-each
         snapshot.docChanges().forEach((documentChange) => {
@@ -205,7 +216,8 @@ const useWebRtcCall = () => {
 
     return () => {
       subscribe();
-      subscribeDelete();
+      subscribeDeleteCallee();
+      subscribeDeleteCaller();
     };
   }, [handleHangup]);
 
