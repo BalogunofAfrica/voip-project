@@ -1,17 +1,20 @@
 import React, { VFC } from "react";
 import { View } from "react-native";
 import Toast from "react-native-simple-toast";
+import { MediaStream } from "react-native-webrtc";
 
 import { IconButton } from "@/components/buttons";
 import { styles } from "@/components/calls/shared/styles";
 import { CustomText } from "@/components/typography";
 import { isWorkingHour } from "@/utils/util-functions";
 
-type IncomingCallProps = {
+type OutgoingCallProps = {
   onCreate: () => void;
+  onHangUp: () => void;
+  localStream: MediaStream | null;
 };
 
-const OutgoingCall: VFC<IncomingCallProps> = (props) => {
+const OutgoingCall: VFC<OutgoingCallProps> = (props) => {
   const handlePress = () => {
     if (isWorkingHour("13:40:0", "23:00:0")) return props.onCreate();
     return Toast.show(
