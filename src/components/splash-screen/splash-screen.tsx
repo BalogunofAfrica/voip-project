@@ -2,21 +2,32 @@ import React, { useEffect } from "react";
 import { View } from "react-native";
 import LinearGradient from "react-native-linear-gradient";
 import Animated from "react-native-reanimated";
+import Toast from "react-native-simple-toast";
 
 import { CustomText } from "@/components/typography";
 import { useSplashAnimation } from "@/hooks/animation/use-splash-animation";
-import { useWebRtcCall } from "@/hooks/webrtc";
-import { sendMail } from "@/utils/util-functions";
+import { isWorkingHour, sendMail } from "@/utils/util-functions";
 
 import { Content } from "./splash-content";
 import { screenStyles } from "./styles";
 
 const AnimatedGradient = Animated.createAnimatedComponent(LinearGradient);
 
-function SplashScreen() {
+interface Props {
+  createCall(): void;
+}
+
+function SplashScreen(props: Props) {
+  const handlePress = () => {
+    if (isWorkingHour()) return props.createCall();
+    return Toast.show(
+      "Oops, sorry we are currently out of office. \nPlease call between 𝟴 𝗮.𝗺 and 𝟰 𝗽.𝗺.",
+      Toast.LONG,
+    );
+  };
+
   const { animate, style1, style2, style3, style4 } = useSplashAnimation();
-  const controller = useWebRtcCall();
-  const mail = "Rm@stanbic.com";
+  const mail = "Anthony.Rommanus@stanbicibtc.com";
   const options = [
     {
       action: () => sendMail(mail),
@@ -24,12 +35,12 @@ function SplashScreen() {
       title: mail,
     },
     {
-      action: controller.handleCreate,
+      action: handlePress,
       icon: "phone",
-      title: "Call",
+      title: "Voice Call",
     },
     {
-      action: controller.handleCreate,
+      action: handlePress,
       icon: "video-camera",
       title: "Video Call",
     },
@@ -66,7 +77,7 @@ function SplashScreen() {
       <Animated.View style={[screenStyles.contentWrapper, style4]}>
         <View style={screenStyles.contentChild}>
           <Content
-            accountOfficerName="Account Officer"
+            accountOfficerName="Anthony Rommanus"
             available="Available"
             options={options}
           />
