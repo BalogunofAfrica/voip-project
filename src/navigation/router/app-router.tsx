@@ -19,10 +19,6 @@ function Router() {
           headerShown: false,
         }}
       >
-        {/* <Stack.Screen
-          component={routes.SplashScreenRoute}
-          name="SplashScreenRoute"
-        /> */}
         <Stack.Screen component={routes.HomeRoute} name="HomeRoute" />
       </Stack.Navigator>
     </NavigationContainer>
