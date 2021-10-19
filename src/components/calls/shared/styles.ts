@@ -16,6 +16,10 @@ const styles = StyleSheet.create({
     marginHorizontal: rf(-3),
     paddingBottom: rf(5),
   },
+  backDrop: {
+    ...StyleSheet.absoluteFillObject,
+    backgroundColor: "rgba(0,0,0,0.6)",
+  },
   background: {
     ...StyleSheet.absoluteFillObject,
     height: "100%",
@@ -26,7 +30,7 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
   },
   callingText: {
-    color: "black",
+    color: "#fff",
     fontSize: rf(3),
   },
   callingTextContainer: {
@@ -37,7 +41,7 @@ const styles = StyleSheet.create({
   },
   container: {
     alignItems: "center",
-    backgroundColor: "rgba(2, 2, 2, 0.5)",
+    backgroundColor: "rgba(0, 0, 0, 0.2)",
     flex: 1,
     justifyContent: "space-between",
     padding: rf(2),
@@ -53,11 +57,39 @@ const styles = StyleSheet.create({
   elevated: {
     elevation: 10,
   },
+  feedbackButton: {
+    alignItems: "center",
+    borderRadius: 40,
+    height: 50,
+    justifyContent: "center",
+    width: "100%",
+  },
+  feedbackButtonContainer: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    marginTop: 20,
+  },
+  feedbackHeading: {
+    fontSize: 16,
+  },
+  feedbackHeading2: {
+    fontSize: 18,
+    marginBottom: 48,
+  },
+  feedbackText: {
+    color: "#fff",
+  },
   flexEnd: {
     justifyContent: "flex-end",
   },
   fullSize: {
     height: "100%",
+    width: "100%",
+  },
+  gradientBorder: {
+    borderRadius: 4,
+    marginTop: 20,
+    padding: 1.5,
     width: "100%",
   },
   iconContainer: {
@@ -70,9 +102,35 @@ const styles = StyleSheet.create({
     right: rf(3),
     top: rf(3),
     width: rw(25),
+    zIndex: 2,
+  },
+  modalContainer: {
+    alignItems: "center",
+    flex: 1,
+    justifyContent: "center",
+  },
+  modalEffect: {
+    backgroundColor: "white",
+    borderRadius: 16,
+    elevation: 5,
+    padding: 16,
+    shadowColor: "#000",
+    shadowOffset: {
+      height: 2,
+      width: 0,
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 4,
+    width: "85%",
   },
   repeatContainer: {
     alignItems: "center",
+  },
+  textInput: {
+    backgroundColor: "white",
+    minHeight: 100,
+    textAlignVertical: "top",
+    width: "100%",
   },
   wrapper: {
     flex: 1,

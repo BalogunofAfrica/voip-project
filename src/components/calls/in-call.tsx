@@ -1,10 +1,9 @@
 import React, { VFC } from "react";
-import { View } from "react-native";
+import { Pressable, View } from "react-native";
+import Icon from "react-native-vector-icons/MaterialCommunityIcons";
 import { MediaStream, RTCView } from "react-native-webrtc";
 
-import { IconButton } from "@/components/buttons";
 import { styles } from "@/components/calls/shared/styles";
-import { CustomText } from "@/components/typography";
 
 type InCallProps = {
   onHangUp: () => void;
@@ -14,13 +13,17 @@ type InCallProps = {
 
 const renderLocalStream = (props: InCallProps) =>
   props.localStream ? (
-    <View style={styles.background}>
+    <View
+      style={
+        props.remoteStream ? [{ backgroundColor: "#000" }] : styles.background
+      }
+    >
       <RTCView
         objectFit="cover"
         streamURL={props.localStream.toURL()}
         style={{
           ...(props.remoteStream ? styles.localVideoSize : styles.fullSize),
-          ...styles.elevated,
+          // ...styles.elevated,
         }}
       />
     </View>
@@ -43,12 +46,16 @@ const InCall: VFC<InCallProps> = (props) => (
     {renderLocalStream(props)}
     <View style={[styles.container, styles.flexEnd]}>
       <View style={styles.actionButtonsContainer}>
-        <IconButton
+        <Pressable
           onPress={props.onHangUp}
-          style={[styles.actionButton, styles.cancelButton]}
+          style={({ pressed }) => [
+            styles.iconContainer,
+            styles.cancelButton,
+            { opacity: pressed ? 0.5 : 1 },
+          ]}
         >
-          <CustomText style={styles.buttonText}>E</CustomText>
-        </IconButton>
+          <Icon color="white" name="phone-hangup" size={36} />
+        </Pressable>
       </View>
     </View>
   </View>
