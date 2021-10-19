@@ -6,6 +6,7 @@ import Toast from "react-native-simple-toast";
 
 import { CustomText } from "@/components/typography";
 import { useSplashAnimation } from "@/hooks/animation/use-splash-animation";
+import { MediaType } from "@/hooks/webrtc/enum";
 import { isWorkingHour, sendMail } from "@/utils/util-functions";
 
 import { Content } from "./splash-content";
@@ -14,12 +15,12 @@ import { screenStyles } from "./styles";
 const AnimatedGradient = Animated.createAnimatedComponent(LinearGradient);
 
 interface Props {
-  createCall(): void;
+  createCall(mediaType: MediaType): void;
 }
 
 function SplashScreen(props: Props) {
-  const handlePress = () => {
-    if (isWorkingHour()) return props.createCall();
+  const handlePress = (mediaType: MediaType) => {
+    if (isWorkingHour()) return props.createCall(mediaType);
     return Toast.show(
       "Oops, sorry we are currently out of office. \nPlease call between 𝟴 𝗮.𝗺 and 𝟰 𝗽.𝗺.",
       Toast.LONG,
@@ -35,12 +36,12 @@ function SplashScreen(props: Props) {
       title: mail,
     },
     {
-      action: handlePress,
+      action: () => handlePress(MediaType.Audio),
       icon: "phone",
       title: "Voice Call",
     },
     {
-      action: handlePress,
+      action: () => handlePress(MediaType.Video),
       icon: "video-camera",
       title: "Video Call",
     },

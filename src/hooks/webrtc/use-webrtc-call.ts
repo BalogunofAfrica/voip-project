@@ -14,7 +14,7 @@ import {
   streamCleanUp,
 } from "@/utils/webrtc";
 
-import { FirebaseDocumentEnum } from "./enum";
+import { FirebaseDocumentEnum, MediaType } from "./enum";
 
 const configuration = {
   iceServers: [
@@ -40,11 +40,11 @@ const useWebRtcCall = () => {
   const handleResetLocalStream = () => setLocalStream(null);
   const handleResetRemoteStream = () => setRemoteStream(null);
 
-  const handleSetUpWebRtc = async () => {
+  const handleSetUpWebRtc = async (mediaType: MediaType) => {
     peerConnection.current = new RTCPeerConnection(configuration);
 
     // Get the audio and video stream for the call
-    const stream = await getMediaStream();
+    const stream = await getMediaStream(mediaType);
 
     if (stream) {
       setLocalStream(stream);
@@ -57,11 +57,11 @@ const useWebRtcCall = () => {
     };
   };
 
-  const handleCreate = async () => {
+  const handleCreate = async (mediaType: MediaType) => {
     connecting.current = true;
 
     // Setup webRtc
-    await handleSetUpWebRtc();
+    await handleSetUpWebRtc(mediaType);
 
     // Firestore document for the call
     const documentRef = firestore()
@@ -105,7 +105,7 @@ const useWebRtcCall = () => {
 
     if (offer) {
       // Setup webRtc
-      await handleSetUpWebRtc();
+      await handleSetUpWebRtc(MediaType.Video);
 
       // Exchange ICE candidates between caller and callee
       // The callee and caller are reversed for joining

@@ -1,6 +1,11 @@
 export enum FirebaseDocumentEnum {
   MeetingRoom = "meet",
-  ChatID = "1",
+  ChatID = "chatId",
   Callee = "callee",
   Caller = "caller",
+}
+
+export enum MediaType {
+  Audio = "audio",
+  Video = "video",
 }

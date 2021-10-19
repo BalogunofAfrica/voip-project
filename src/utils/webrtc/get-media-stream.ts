@@ -1,6 +1,8 @@
 import { mediaDevices } from "react-native-webrtc";
 
-const getMediaStream = async () => {
+import { MediaType } from "@/hooks/webrtc/enum";
+
+const getMediaStream = async (mediaType: MediaType) => {
   const isFront = true;
 
   const sourceInfos = await mediaDevices.enumerateDevices();
@@ -18,15 +20,19 @@ const getMediaStream = async () => {
   }
   const stream = await mediaDevices.getUserMedia({
     audio: true,
-    video: {
-      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-      // @ts-ignore
-      deviceId: videoSourceId,
-      facingMode: isFront ? "user" : "environment",
-      frameRate: 30,
-      height: 480,
-      width: 640,
-    },
+    ...(mediaType === MediaType.Video
+      ? {
+          video: {
+            // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+            // @ts-ignore
+            deviceId: videoSourceId,
+            facingMode: isFront ? "user" : "environment",
+            frameRate: 30,
+            height: 480,
+            width: 640,
+          },
+        }
+      : {}),
   });
 
   if (typeof stream !== "boolean") return stream;
