@@ -1,15 +1,7 @@
 import React from "react";
-import { StyleSheet, View } from "react-native";
 
-import { InCall, IncomingCall, OutgoingCall } from "@/components/calls";
+import { InCall, IncomingCall } from "@/components/calls";
 import { useWebRtcCall } from "@/hooks/webrtc";
-
-const styles = StyleSheet.create({
-  container: {
-    backgroundColor: "#fff",
-    flex: 1,
-  },
-});
 
 const Home = () => {
   const controller = useWebRtcCall();
@@ -23,20 +15,14 @@ const Home = () => {
     );
   }
 
-  if (controller.localStream) {
-    return (
-      <InCall
-        localStream={controller.localStream}
-        onHangUp={controller.handleHangup}
-        remoteStream={controller.remoteStream}
-      />
-    );
-  }
-
   return (
-    <View style={styles.container}>
-      <OutgoingCall onCreate={controller.handleCreate} />
-    </View>
+    <InCall
+      isConnecting={controller.connecting.current}
+      localStream={controller.localStream}
+      onCreate={controller.handleCreate}
+      onHangUp={controller.handleHangup}
+      remoteStream={controller.remoteStream}
+    />
   );
 };
 

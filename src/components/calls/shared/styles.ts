@@ -32,6 +32,11 @@ const styles = StyleSheet.create({
   callingTextContainer: {
     paddingTop: rf(5),
   },
+  callingTextContainerFixed: {
+    alignItems: "center",
+    position: "absolute",
+    top: 0,
+  },
   cancelButton: {
     backgroundColor: "red",
   },
@@ -41,6 +46,9 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: "space-between",
     padding: rf(2),
+  },
+  containerAbsolute: {
+    ...StyleSheet.absoluteFillObject,
   },
   createButton: {
     backgroundColor: "blue",
@@ -76,6 +84,7 @@ const styles = StyleSheet.create({
   },
   wrapper: {
     flex: 1,
+    position: "relative",
   },
 });
 
